@@ -1,21 +1,20 @@
-import { HTMLAttributes } from "react"
+import { useMemo, useRef, HTMLAttributes } from "react"
 import { ComponentFactory } from "../motion/types"
 import { motion } from "../motion"
 import { ParentSizeContext } from "./ParentSizeContext"
-import { useSize } from "./utils/use-size"
+import { useConstraints } from "./utils/use-constraints"
 
 type FrameComponent = ComponentFactory<HTMLAttributes<HTMLDivElement>>
 type FrameProps = {}
 
-const Frame: FrameComponent = ({ constraints, style, ...props }: FrameProps) => {
-    const size = useSize(constraints)
-    const Div = motion.div({
-        default: size,
-    })
+const Frame: FrameComponent = ({ constraints, poses, style, ...props }: FrameProps) => {
+    const { width, x, ...constraintStyles } = useConstraints(constraints)
+
+    const Div = useMemo(() => motion.div(poses), [])
 
     return (
-        <ParentSizeContext.Provider value={size}>
-            <Div {...props} style={style} />
+        <ParentSizeContext.Provider value={{ width, x }}>
+            <Div {...props} motionValues={{ width, x }} style={{ ...style, ...constraintStyles }} />
         </ParentSizeContext.Provider>
     )
 }
