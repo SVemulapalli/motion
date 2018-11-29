@@ -33,7 +33,7 @@ export const useConstraints = c => {
     const isWidthBoundToParent = c.width === undefined
 
     const deriveWidthFromParent = useRef(parentWidth => {
-        resolved.width.set(parentWidth - c.left - c.right)
+        resolved.width.set(Math.round(parentWidth - c.left - c.right))
     })
 
     if (isWidthBoundToParent) {
@@ -43,7 +43,7 @@ export const useConstraints = c => {
     const isXBoundToWidth = c.left === undefined && c.right !== undefined
 
     const deriveXFromWidth = useRef(thisWidth => {
-        resolved.x.set(parentSize.width.get() - thisWidth - c.right)
+        resolved.x.set(Math.round(parentSize.width.get() - thisWidth - c.right))
     })
 
     if (isXBoundToWidth) {
