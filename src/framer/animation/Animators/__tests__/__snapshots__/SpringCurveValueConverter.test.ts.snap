@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`computeDampingRatio should return correct value 1`] = `1.3416407864998738`;
+
+exports[`computeDampingRatio should return correct value 2`] = `1.8973665961010275`;
+
+exports[`computeDerivedCurveOptions should return correct value 1`] = `
+Object {
+  "friction": 18.466826952903173,
+  "tension": 85.25592442711776,
+  "velocity": 0,
+}
+`;
+
+exports[`computeDerivedCurveOptions should return correct value 2`] = `
+Object {
+  "friction": 18.466826952903173,
+  "tension": 85.25592442711776,
+  "velocity": 0,
+}
+`;
+
+exports[`computeDerivedCurveOptions should return correct value 3`] = `
+Object {
+  "friction": 9.220390707829685,
+  "tension": 2125.3901201257995,
+  "velocity": 0,
+}
+`;
+
+exports[`computeDuration should return correct value 1`] = `12.716898269296165`;
+
+exports[`computeDuration should return correct value 2`] = `12.716898269296165`;
+
+exports[`computeDuration should return null 1`] = `null`;
+
+exports[`computeDuration should return null 2`] = `null`;

@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should resize a child frame with CanvasMode.live without rerendering 1`] = `
+Object {
+  "WebkitBackfaceVisibility": undefined,
+  "WebkitPerspective": undefined,
+  "WebkitTransformOrigin": "50% 50%",
+  "backfaceVisibility": undefined,
+  "backgroundColor": "rgba(0, 170, 255, 0.3)",
+  "display": "block",
+  "height": "10px",
+  "perspective": undefined,
+  "pointerEvents": undefined,
+  "position": "absolute",
+  "transform": "
+            translate(35px, 20px)
+            scale(1, 1)
+            skew(0deg,0deg)
+            skewX(0deg)
+            skewY(0deg)
+            rotate(0.0000deg)",
+  "transformOrigin": "50% 50%",
+  "userSelect": "none",
+  "width": "10px",
+  "willChange": "transform",
+}
+`;
+
+exports[`should resize a child frame with CanvasMode.live without rerendering 2`] = `
+CSSStyleDeclaration {
+  "0": "display",
+  "1": "position",
+  "2": "width",
+  "3": "height",
+  "4": "transform",
+  "5": "background-color",
+  "WebkitBackfaceVisibility": undefined,
+  "WebkitPerspective": undefined,
+  "WebkitTransformOrigin": "50% 50%",
+  "_importants": Object {
+    "background-color": undefined,
+    "display": undefined,
+    "height": undefined,
+    "position": undefined,
+    "transform": undefined,
+    "width": undefined,
+  },
+  "_length": 6,
+  "_onChange": [Function],
+  "_values": Object {
+    "background-color": "rgba(0, 170, 255, 0.3)",
+    "display": "block",
+    "height": "10px",
+    "position": "absolute",
+    "transform": "
+            translate(85px, 20px)
+            scale(1, 1)
+            skew(0deg,0deg)
+            skewX(0deg)
+            skewY(0deg)
+            rotate(0.0000deg)",
+    "width": "10px",
+  },
+  "backfaceVisibility": undefined,
+  "perspective": undefined,
+  "transformOrigin": "50% 50%",
+  "userSelect": "none",
+  "willChange": "transform",
+}
+`;
+
+exports[`should resize a child frame with RenderTarget.canvas 1`] = `
+Object {
+  "WebkitBackfaceVisibility": undefined,
+  "WebkitPerspective": undefined,
+  "WebkitTransformOrigin": "50% 50%",
+  "backfaceVisibility": undefined,
+  "backgroundColor": "rgba(0, 170, 255, 0.3)",
+  "display": "block",
+  "height": "10px",
+  "perspective": undefined,
+  "pointerEvents": undefined,
+  "position": "absolute",
+  "transform": "
+            translate(35px, 20px)
+            scale(1, 1)
+            skew(0deg,0deg)
+            skewX(0deg)
+            skewY(0deg)
+            rotate(0.0000deg)",
+  "transformOrigin": "50% 50%",
+  "userSelect": "none",
+  "width": "10px",
+  "willChange": "transform",
+}
+`;
+
+exports[`should resize a child frame with RenderTarget.canvas 2`] = `
+Object {
+  "WebkitBackfaceVisibility": undefined,
+  "WebkitPerspective": undefined,
+  "WebkitTransformOrigin": "50% 50%",
+  "backfaceVisibility": undefined,
+  "backgroundColor": "rgba(0, 170, 255, 0.3)",
+  "display": "block",
+  "height": "10px",
+  "perspective": undefined,
+  "pointerEvents": undefined,
+  "position": "absolute",
+  "transform": "
+            translate(85px, 20px)
+            scale(1, 1)
+            skew(0deg,0deg)
+            skewX(0deg)
+            skewY(0deg)
+            rotate(0.0000deg)",
+  "transformOrigin": "50% 50%",
+  "userSelect": "none",
+  "width": "10px",
+  "willChange": "transform",
+}
+`;
+
+exports[`should resize a child frame with RenderTarget.canvas 3`] = `
+CSSStyleDeclaration {
+  "0": "display",
+  "1": "position",
+  "2": "width",
+  "3": "height",
+  "4": "transform",
+  "5": "background-color",
+  "WebkitBackfaceVisibility": "",
+  "WebkitPerspective": "",
+  "WebkitTransformOrigin": "50% 50%",
+  "_importants": Object {
+    "background-color": undefined,
+    "display": undefined,
+    "height": undefined,
+    "position": undefined,
+    "transform": undefined,
+    "width": undefined,
+  },
+  "_length": 6,
+  "_onChange": [Function],
+  "_values": Object {
+    "background-color": "rgba(0, 170, 255, 0.3)",
+    "display": "block",
+    "height": "10px",
+    "position": "absolute",
+    "transform": "translate(85px, 20px)
+            scale(1, 1)
+            skew(0deg,0deg)
+            skewX(0deg)
+            skewY(0deg)
+            rotate(0.0000deg)",
+    "width": "10px",
+  },
+  "backfaceVisibility": "",
+  "perspective": "",
+  "transformOrigin": "50% 50%",
+  "userSelect": "none",
+  "willChange": "transform",
+}
+`;

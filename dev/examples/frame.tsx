@@ -2,18 +2,29 @@ import { useState } from "react"
 import { Frame, useMotionValue, createAnimation } from "@framer"
 
 export const App = () => {
-    const [pose, setPose] = useState("default")
+    const [pose, setPose] = useState(400)
+    const height = useMotionValue(500)
 
     return (
-        <Frame constraints={{ width: 500, height: 500 }} style={{ backgroundColor: "white" }}>
-            <Frame
-                constraints={{ width: 100, height: 200, right: 50 }}
-                poses={{ default: { width: 100 }, large: { width: 500 } }}
-                pose={pose}
-                style={{ backgroundColor: "black" }}
-                onClick={() => setPose(pose === "default" ? "large" : "default")}
+        <Frame width={pose} height={height} style={{ marginTop: "50px", backgroundColor: "white" }}>
+            <button
+                onClick={() => {
+                    console.log(pose)
+                    setPose(pose === 400 ? 200 : 400)
+                }}
             >
-                <Frame constraints={{ height: 100, left: 10, right: 10 }} style={{ backgroundColor: "red" }} />
+                test
+            </button>
+            <Frame width={"50%"} height={200} right={50} style={{ backgroundColor: "black" }}>
+                <Frame
+                    borderWidth={10}
+                    borderColor="pink"
+                    height={100}
+                    top={10}
+                    left={10}
+                    right={10}
+                    style={{ backgroundColor: "red" }}
+                />
             </Frame>
         </Frame>
     )
