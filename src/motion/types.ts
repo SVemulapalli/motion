@@ -19,12 +19,33 @@ export type PoseConfig = {
     [key: string]: Pose | PoseResolver
 }
 
+export type TransformValues = {
+    x?: string
+    y?: string
+    z?: string
+    perspective?: string | number
+    scale?: number
+    scaleX?: number
+    scaleY?: number
+    scaleZ?: number
+    rotate?: string
+    rotateX?: string
+    rotateY?: string
+    rotateZ?: string
+    skew?: number
+    skewX?: number
+    skewY?: number
+}
+
+export type ParseTransformValues = (values: TransformValues) => string
+
 export type MotionProps<Poses = string> = {
     [key: string]: any
     ref?: Ref<any>
     pose?: Poses | Poses[] | MotionValue
     motionValues?: { [key: string]: MotionValue }
     style?: CSSProperties
+    transformTemplate?: ParseTransformValues
     onPoseComplete?: (current: CurrentValues, velocity: VelocityValues) => void
 }
 

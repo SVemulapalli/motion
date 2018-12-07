@@ -2,13 +2,14 @@ import { MotionValue } from "../motion-value"
 import { resolvePoses } from "../utils/pose-resolvers"
 import { PoseConfig, MotionProps, MotionValueMap } from "../motion/types"
 import { useRef, useEffect, RefObject } from "react"
+import styler from "stylefire"
 import { createValuesFromPose, bindValuesToRef } from "../utils/create-value"
 
 const isMotionValue = (value: any): value is MotionValue => value instanceof MotionValue
 
 export const usePosedValues = (
     config: PoseConfig,
-    { onPoseComplete, pose = "default", motionValues, ...props }: MotionProps,
+    { onPoseComplete, pose = "default", motionValues, transformTemplate, ...props }: MotionProps,
     ref: RefObject<Element>
 ): [MotionValueMap, Partial<MotionProps>] => {
     const values: MotionValueMap = useRef(new Map<string, MotionValue>()).current
@@ -44,6 +45,16 @@ export const usePosedValues = (
         bindValuesToRef(values, ref)
         return () => values.forEach(value => value.destroy())
     }, [])
+
+    // 4. Update `transformTemplate` prop on styler if/when it changes
+    useEffect(
+        () => {
+            if (ref.current && transformTemplate) {
+                styler(ref.current).set({ transform: transformTemplate })
+            }
+        },
+        [transformTemplate]
+    )
 
     return [values, props]
 }

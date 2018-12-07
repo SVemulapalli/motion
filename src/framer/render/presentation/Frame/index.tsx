@@ -5,6 +5,7 @@ import { ParentSizeContext } from "./ParentSizeContext"
 import { useMotionComponent } from "./utils/use-motion-component"
 import { useConstraints } from "./utils/use-constraints"
 import { useStylesAndMotionValues } from "./utils/use-styles-and-motion-values"
+import { useTransformTemplate } from "./utils/use-transform-template"
 
 export const Frame = ({ id, className, visible = true, children, ...props }: FrameProps) => {
     if (!visible) return null
@@ -12,9 +13,16 @@ export const Frame = ({ id, className, visible = true, children, ...props }: Fra
     const Div = useMotionComponent({})
     const motionRect = useConstraints(props)
     const [style, motionValues] = useStylesAndMotionValues(props)
+    const transformTemplate = useTransformTemplate(props, motionValues)
 
     return (
-        <Div id={id} className={className} style={style} motionValues={{ ...motionRect, ...motionValues }}>
+        <Div
+            id={id}
+            className={className}
+            style={style}
+            transformTemplate={transformTemplate}
+            motionValues={{ ...motionRect, ...motionValues }}
+        >
             <ParentSizeContext.Provider value={motionRect}>
                 {children}
                 {props.borderWidth ? <FrameBorder {...props} borderRadius={style.borderRadius} /> : null}

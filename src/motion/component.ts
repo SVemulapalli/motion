@@ -4,7 +4,7 @@ import { useConfig } from "../hooks/use-config"
 import { useExternalRef } from "../hooks/use-external-ref"
 import { usePosedValues } from "../hooks/use-posed-values"
 import { usePoseResolver } from "../hooks/use-pose-resolver"
-import { useStyleAttr } from "../hooks/use-style-attr"
+import { useInitialStyleAttr } from "../hooks/use-style-attr"
 import { useScrollValues } from "../scroll/use-scroll-values"
 
 /**
@@ -203,7 +203,7 @@ export const createMotionComponent = <P extends {}>(Component: string | Componen
                 return createElement<any>(Component, {
                     ...componentProps,
                     ref,
-                    style: useStyleAttr(values, props.style),
+                    style: useInitialStyleAttr(values, props),
                     onScroll: useScrollValues(values, props.onScroll),
                 })
             }
