@@ -89,11 +89,6 @@ export class AnimationControls<P = {}> {
         const animations = Object.keys(target).reduce(
             (acc, key) => {
                 if (this.isAnimating.has(key)) return acc
-
-                if (!this.values.has(key)) {
-                    this.values.set(key, motionValue(0)) // TODO get this initial value properly
-                }
-
                 const value = this.values.get(key)
                 if (!value) return acc
 

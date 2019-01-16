@@ -37,13 +37,41 @@ const ExampleList = () => {
     )
 }
 
+export const Example = props => {
+    const { example } = props
+    const exampleFile = require(`../examples/${example}`)
+    const CurrentExample = exampleFile.default || exampleFile.App
+    if (CurrentExample) {
+        if (CurrentExample) {
+            return (
+                <Container>
+                    <CurrentExample />
+                </Container>
+            )
+        } else {
+            return (
+                <p>
+                    <Code>examples/{example}</Code> does not have a export named <Code>App</Code>
+                </p>
+            )
+        }
+    }
+}
+
 export class App extends React.Component {
     render() {
         const url = new URL(window.location.href)
         const example = url.searchParams.get("example")
 
-        if (!example) {
-            return <ExampleList />
+        if (example) {
+            return (
+                <div>
+                    <a href={`${url.origin}`} style={{ float: "right" }}>
+                        all examples
+                    </a>
+                    <Example example={example} />
+                </div>
+            )
         }
 
         const exampleName = fileName(example)

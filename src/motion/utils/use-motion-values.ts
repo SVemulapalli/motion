@@ -4,8 +4,7 @@ import styler, { Styler } from "stylefire"
 import { invariant } from "hey-listen"
 
 export class MotionValuesMap {
-    private hasMounted = false
-    private styler: Styler
+    private styler?: Styler
     private values = new Map<string, MotionValue>()
     private unsubscribers = new Map<string, () => void>()
 
@@ -15,15 +14,25 @@ export class MotionValuesMap {
 
     set(key: string, value: MotionValue) {
         this.values.set(key, value)
-
-        if (this.hasMounted) this.bindValueToStyler(key, value)
+        this.bindValueToStyler(key, value)
     }
 
     get<Value>(key: string): MotionValue<Value> | undefined
     get<Value>(key: string, defaultValue: Value): MotionValue<Value>
     get<Value>(key: string, defaultValue?: Value): MotionValue<Value> | undefined {
         let value = this.values.get(key)
-        if (value === undefined && defaultValue !== undefined) {
+        if (value === undefined) {
+            if (defaultValue === undefined) {
+                if (this.styler) {
+                    defaultValue = this.styler.get(key)
+                } else {
+                    let defaultNumber: any = 0
+                    if (key === "scale" || key === "opacity") {
+                        defaultNumber = 1
+                    }
+                    defaultValue = defaultNumber
+                }
+            }
             value = new MotionValue(defaultValue)
             this.set(key, value)
         }
@@ -35,13 +44,20 @@ export class MotionValuesMap {
     }
 
     bindValueToStyler(key: string, value: MotionValue) {
-        const update = (v: any) => this.styler.set(key, v)
+        if (!this.styler) {
+            return
+        }
+        const update = (v: any) => {
+            if (!this.styler) {
+                return
+            }
+            this.styler.set(key, v)
+        }
         const unsubscribe = value.addRenderSubscription(update)
         this.unsubscribers.set(key, unsubscribe)
     }
 
     mount(element: Element) {
-        this.hasMounted = true
         this.styler = styler(element)
         this.values.forEach((value, key) => this.bindValueToStyler(key, value))
     }
@@ -51,6 +67,7 @@ export class MotionValuesMap {
             const unsubscribe = this.unsubscribers.get(key)
             unsubscribe && unsubscribe()
         })
+        this.styler = undefined
     }
 }
 
