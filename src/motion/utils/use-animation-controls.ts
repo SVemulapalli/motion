@@ -41,6 +41,8 @@ const isTargetResolver = (p: any): p is TargetResolver =>
     typeof p === "function"
 const isVariantLabels = (v: any): v is string[] => Array.isArray(v)
 
+const isNumber = (v: string) => /^\d*\.?\d+$/.test(v)
+
 export class AnimationControls<P = {}> {
     private props: P
     private values: MotionValuesMap
@@ -100,8 +102,13 @@ export class AnimationControls<P = {}> {
         const domStyler = styler(this.ref.current as Element)
         newValueKeys.forEach(key => {
             const domValue = domStyler.get(key)
-            this.values.set(key, motionValue(domValue))
-            this.baseTarget[key] = domValue
+            const parsedValue =
+                typeof domValue === "string" && isNumber(domValue)
+                    ? parseFloat(domValue)
+                    : domValue
+
+            this.values.set(key, motionValue(parsedValue))
+            this.baseTarget[key] = parsedValue
         })
     }
 

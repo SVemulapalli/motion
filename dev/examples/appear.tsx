@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useState } from "react"
-import { motion, Appear } from "@framer"
+import { motion, Appear, useCycle } from "@framer"
 
 const style = {
     width: 100,
@@ -9,17 +9,13 @@ const style = {
 }
 
 export const App = () => {
-    const [isVisible, setIsVisible] = useState(true)
-
+    const [isVisible, cycle] = useCycle([true, false])
     return (
-        <Appear>
-            {isVisible && (
-                <motion.div
-                    key="test"
-                    style={style}
-                    onClick={() => setIsVisible(false)}
-                />
-            )}
-        </Appear>
+        <>
+            <Appear enter={{ opacity: 1 }} leave={{ opacity: 0 }}>
+                {isVisible && <motion.div key="test" style={style} />}
+            </Appear>
+            <button onClick={cycle}>Toggle</button>
+        </>
     )
 }

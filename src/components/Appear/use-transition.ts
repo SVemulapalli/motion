@@ -6,6 +6,7 @@ import {
     ReactNode,
     useRef,
     cloneElement,
+    useMemo,
 } from "react"
 import { TargetAndTransition } from "types"
 import { invariant } from "hey-listen"
@@ -96,12 +97,34 @@ const getLeavingKeys = (
 
 export const useTransition = (
     children?: ReactChildren,
-    { enter, leave }: AppearVariants
+    { enter, leave }: AppearVariants = {}
 ) => {
     const finishedLeaving = useRef<KeyMap>({}).current
 
     const next = childList(children)
     const [renderedChildren, setRenderedChildren] = useState(next)
+
+    const scheduleChildRemoval = useMemo(
+        () => (key: string) => {
+            if (!finishedLeaving.hasOwnProperty(key)) return
+
+            finishedLeaving[key] = true
+
+            const allFinishedLeaving = !Object.keys(finishedLeaving).some(
+                key => finishedLeaving[key] === false
+            )
+
+            if (allFinishedLeaving) {
+                setRenderedChildren(
+                    renderedChildren.filter(
+                        child => !finishedLeaving.hasOwnProperty(child.key)
+                    )
+                )
+            }
+        },
+        []
+    )
+
     const prev = renderedChildren
     const prevKeys = childKeys(prev)
     const nextKeys = childKeys(next)
@@ -118,14 +141,30 @@ export const useTransition = (
         enteringKeys
     )
 
+    enteringKeys.forEach(key => {
+        const childIndex = next.findIndex(child => child.key === key)
+        const child = next[childIndex]
+
+        // TODO This will almost certainly break for multiple children
+        renderedChildren[childIndex] = cloneElement(child, {
+            initial: leave,
+            animate: enter,
+        })
+    })
+
     leavingKeys.forEach(key => {
-        const child = renderedChildren[key]
+        const childIndex = renderedChildren.findIndex(
+            child => child.key === key
+        )
+        const child = renderedChildren[childIndex]
         const clonedChild = !newLeavers[key]
             ? child
             : cloneElement(child, {
                   animate: leave,
-                  onAnimationComplete: () => {},
+                  onAnimationComplete: () => scheduleChildRemoval(key),
               })
+
+        renderedChildren[childIndex] = clonedChild
     })
 
     return renderedChildren
