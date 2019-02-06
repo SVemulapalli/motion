@@ -1,5 +1,5 @@
-import { unwrapMotionValue } from "../utils/unwrap-value"
-import { MotionValue } from "../"
+import { unwrapMotionValue } from "../utils/unwrap-motion-value"
+import { MotionValue } from ".."
 
 describe("unwrapMotionValue", () => {
     it("should leave non-motion values alone", () => {
