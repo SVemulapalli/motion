@@ -19,12 +19,20 @@ export const App = () => {
         <div>
             <div>
                 <Appear enter={{ opacity: 1 }} leave={{ opacity: 0 }}>
+                    <motion.div
+                        key={0}
+                        style={{ ...style, backgroundColor: "purple" }}
+                    />
                     {list.map((t, i) => (
                         <motion.div
-                            key={i}
+                            key={i + 1}
                             style={{ ...style, backgroundColor: colors[i] }}
                         />
                     ))}
+                    <motion.div
+                        key={10}
+                        style={{ ...style, backgroundColor: "white" }}
+                    />
                 </Appear>
             </div>
             <div style={{ position: "absolute", top: 10, left: 10 }}>

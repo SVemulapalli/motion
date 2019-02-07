@@ -64,6 +64,7 @@ const getEnteringKeys = (
         key => finishedLeaving.hasOwnProperty(key) || prev.indexOf(key) === -1
     )
     enteringKeys.forEach(key => delete finishedLeaving[key])
+
     return enteringKeys
 }
 
@@ -99,30 +100,31 @@ export const useTransition = (
     children?: ReactChildren,
     { enter, leave }: AppearVariants = {}
 ) => {
-    const finishedLeaving = useRef<KeyMap>({}).current
+    const finishedLeavingRef = useRef<KeyMap>({})
 
     const next = childList(children)
     const [renderedChildren, setRenderedChildren] = useState(next)
 
     const scheduleChildRemoval = useMemo(
         () => (key: string) => {
-            if (!finishedLeaving.hasOwnProperty(key)) return
+            if (!finishedLeavingRef.current.hasOwnProperty(key)) return
 
-            finishedLeaving[key] = true
+            finishedLeavingRef.current[key] = true
 
-            const allFinishedLeaving = !Object.keys(finishedLeaving).some(
-                key => finishedLeaving[key] === false
-            )
+            const allFinishedLeaving = !Object.keys(
+                finishedLeavingRef.current
+            ).some(key => finishedLeavingRef.current[key] === false)
 
             if (allFinishedLeaving) {
-                setRenderedChildren(
-                    renderedChildren.filter(
-                        child => !finishedLeaving.hasOwnProperty(child.key)
-                    )
-                )
+                const remainingChildren = next.filter(child => {
+                    return !finishedLeavingRef.current.hasOwnProperty(child.key)
+                })
+
+                setRenderedChildren(remainingChildren)
+                finishedLeavingRef.current = {}
             }
         },
-        []
+        [next]
     )
 
     const prev = renderedChildren
@@ -133,24 +135,38 @@ export const useTransition = (
         return renderedChildren
     }
 
-    const enteringKeys = getEnteringKeys(prevKeys, nextKeys, finishedLeaving)
+    const enteringKeys = getEnteringKeys(
+        prevKeys,
+        nextKeys,
+        finishedLeavingRef.current
+    )
     const [leavingKeys, newLeavers] = getLeavingKeys(
         prevKeys,
         nextKeys,
-        finishedLeaving,
+        finishedLeavingRef.current,
         enteringKeys
     )
 
-    enteringKeys.forEach(key => {
-        const childIndex = next.findIndex(child => child.key === key)
-        const child = next[childIndex]
-
-        // TODO This will almost certainly break for multiple children
-        renderedChildren[childIndex] = cloneElement(child, {
+    const displayed = []
+    nextKeys.forEach((_key, i) => {
+        const newChild = cloneElement(next[i], {
             initial: leave,
             animate: enter,
         })
+
+        displayed.push(newChild)
     })
+
+    // enteringKeys.forEach(key => {
+    //     const childIndex = next.findIndex(child => child.key === key)
+    //     const child = next[childIndex]
+
+    //     // TODO This will almost certainly break for multiple children - it did!
+    //     renderedChildren[childIndex] = cloneElement(child, {
+    //         initial: leave,
+    //         animate: enter,
+    //     })
+    // })
 
     leavingKeys.forEach(key => {
         const childIndex = renderedChildren.findIndex(
@@ -163,9 +179,9 @@ export const useTransition = (
                   animate: leave,
                   onAnimationComplete: () => scheduleChildRemoval(key),
               })
-
+        // TODO FIND INDEX BETTER
         renderedChildren[childIndex] = clonedChild
     })
 
-    return renderedChildren
+    return displayed
 }

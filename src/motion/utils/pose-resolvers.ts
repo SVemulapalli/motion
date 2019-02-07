@@ -15,7 +15,8 @@ const poseToArray = (pose?: PoseName): PoseNameList => {
 }
 
 export const resolvePoses = (pose?: UnresolvedPose): PoseNameList => {
-    const unresolvedPose = pose instanceof MotionValue ? (pose.get() as string) : pose
+    const unresolvedPose =
+        pose instanceof MotionValue ? (pose.get() as string) : pose
 
     return Array.from(new Set(poseToArray(unresolvedPose)))
 }
@@ -25,4 +26,4 @@ export const resolvePoses = (pose?: UnresolvedPose): PoseNameList => {
  * When values in this array change, React re-runs the dependency. However if the array
  * contains a variable number of items, React throws an error.
  */
-export const asDependencyList = (list: PoseNameList): string[] => [list.join(",")]
+export const asDependencyList = (list: PoseNameList): string[] => list
