@@ -42,7 +42,7 @@ declare class MotionValue<V = any> {
     // (undocumented)
     removeChild(child: MotionValue): void
     // (undocumented)
-    scheduleVelocityCheck: () => import("framesync/lib/types").Process
+    scheduleVelocityCheck: () => Process
     // (undocumented)
     set(v: V, render?: boolean): void
     // (undocumented)
@@ -141,15 +141,6 @@ declare function useTransformedValue(
 ): MotionValue
 
 // @public
-declare const useViewportScrollValues: () => {
-    // (undocumented)
-    scrollX: import(".").MotionValue<number>
-    // (undocumented)
-    scrollY: import(".").MotionValue<number>
-    // (undocumented)
-    scrollXProgress: import(".").MotionValue<number>
-    // (undocumented)
-    scrollYProgress: import(".").MotionValue<number>
-}
+declare const useViewportScrollValues: () => ScrollMotionValues
 
 // (No @packageDocumentation comment for this package)
