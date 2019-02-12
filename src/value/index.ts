@@ -1,4 +1,4 @@
-import sync, { getFrameData, FrameData } from "framesync"
+import sync, { getFrameData, FrameData, Process } from "framesync"
 import {
     chain,
     delay as delayAction,
@@ -149,7 +149,7 @@ export class MotionValue<V = any> {
         subscriber(this.current)
     }
 
-    scheduleVelocityCheck = () => sync.postRender(this.velocityCheck)
+    scheduleVelocityCheck = (): Process => sync.postRender(this.velocityCheck)
 
     velocityCheck = ({ timestamp }: FrameData) => {
         if (timestamp !== this.lastUpdated) {
