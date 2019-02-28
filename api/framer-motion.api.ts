@@ -1,6 +1,6 @@
 // @public (undocumented)
 interface AnimationProps {
-    animate?: AnimationControls | TargetAndTransition | VariantLabels;
+    animate?: TargetAndTransition | AnimationControls | VariantLabels;
     transition?: Transition;
     variants?: Variants;
 }
@@ -113,6 +113,9 @@ interface MotionCallbacks {
 
 // @public
 declare type MotionComponents = CustomMotionComponent & HTMLMotionComponents & SVGMotionComponents;
+
+// @internal (undocumented)
+declare const MotionContext: import("react").Context<MotionContextProps>;
 
 // @internal (undocumented)
 declare const MotionPluginContext: React.Context<Partial<MotionPlugins>>;
