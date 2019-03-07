@@ -87,12 +87,11 @@ interface Keyframes {
     // @internal (undocumented)
     from?: number | string;
     loop?: number;
-    times?: number[];
+    times: number[];
     // @internal (undocumented)
     to?: number | string;
     type: "keyframes";
-    // @internal
-    values: KeyframesTarget;
+    values: number[] | string[];
     // @internal (undocumented)
     velocity?: number;
     yoyo?: number;

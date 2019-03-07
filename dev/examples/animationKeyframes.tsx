@@ -9,11 +9,18 @@ const style = {
 }
 
 export const App = () => {
+    const transition = {
+        backgroundColor: {
+            type: "keyframes",
+            values: ["#0f0", "#f00", "#00f"],
+            duration: 2,
+        },
+    }
+
     return (
         <motion.div
-            animate={{
-                width: [null, 100, 300],
-            }}
+            animate={{ backgroundColor: "#00f" }}
+            transition={transition}
             style={style}
         />
     )

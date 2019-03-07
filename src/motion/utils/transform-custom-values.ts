@@ -1,5 +1,11 @@
+export type WithCustom = {
+    [key: string]: any
+    size?: string | number
+    image?: string
+}
+
 // If this function grows with new properties it'll probably benefit from a map approach
-export const transformCustomValues = <T extends any>(values: T): T => {
+export const transformCustomValues = <T extends WithCustom>(values: T) => {
     // Return early if we're not changing any values
     if (values.size === undefined && values.image === undefined) {
         return values
@@ -12,7 +18,8 @@ export const transformCustomValues = <T extends any>(values: T): T => {
     }
 
     if (image !== undefined) {
-        remainingValues.backgroundImage = image
+        remainingValues.backgroundImage =
+            image.substring(0, 4) === "url(" ? image : `url(${image})`
     }
 
     return remainingValues
